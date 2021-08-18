@@ -13,9 +13,11 @@ export default {
   components: {
     Task
   },
-  props: {
-    tasks: Array
-  }
+  computed: {
+    tasks() {
+      return this.$store.state.tasks
+    }
+  },
 }
 </script>
 

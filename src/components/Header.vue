@@ -14,10 +14,9 @@ export default {
   },
   methods: {
     hideAddTaskForm() {
-      this.$emit('hide-form')
+      this.$store.dispatch('toggleAddTaskForm')
     }
-  },
-  emits: [`hide-form`]
+  }
 }
 </script>
 

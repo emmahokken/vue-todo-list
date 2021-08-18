@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <div class="container">
-      <Header @hide-form="hideAddTaskForm"/>
-      <div v-show="toggleAddTaskForm">
-        <AddTask @add-task="addTask"/>
+      <Header />
+      <div v-show="showForm">
+        <AddTask/>
       </div>
       <Tasks :tasks="tasks"/>
       <Footer/>
@@ -26,47 +26,53 @@ export default {
     Tasks,
     AddTask
   },
-  data: function () {
-    return {
-      tasks: [],
-      toggleAddTaskForm: false
-    }
-  },
-  methods: {
-    addTask(task) {
-      this.tasks = [...this.tasks, task];
+  computed: {
+    tasks() {
+      return this.$store.getters.getTasks;
     },
-    hideAddTaskForm() {
-      this.toggleAddTaskForm = !this.toggleAddTaskForm;
+    showForm() {
+      return this.$store.getters.getShowForm;
     }
   },
-  created() {
-    this.tasks = [
-      {
-        id: 0,
-        text: "Meeting at home",
-        day: "March 4th, 2020 at 1:30pm",
-        reminder: true
-      },
-      {
-        id: 1,
-        text: "Meeting at ARTIS",
-        day: "March 13th, 2021 at 1:30pm",
-        reminder: false
-      },
-      {
-        id: 2,
-        text: "Record the end of the world",
-        day: "August 11th, 2021 at 4:00am",
-        reminder: true
-      },
-      {
-        id: 3,
-        text: "Feed the cat",
-        day: "July 4th, 2020 at 1:30pm",
-        reminder: true
-      },
-    ]
-  }
+  // data: function () {
+  //   return {
+  //     tasks: [],
+  //     showForm: false
+  //   }
+  // },
+  // methods: {
+  //   addTask(task) {
+  //     this.tasks = [...this.tasks, task];
+  //     this.showForm = false;
+  //   },
+  //   hideAddTaskForm() {
+  //     this.showForm = !this.showForm;
+  //   },
+  //   toggleReminder(id) {
+  //     this.tasks = this.tasks.map((task) => task.id == id ? { ...task, reminder: !task.reminder } : task )
+  //     this.$emit('task-completed', id);
+  //   },
+  //   deleteTask(id) {
+  //     this.tasks = this.tasks.filter((task) => task.id !== id);
+  //   }
+  // },
+  // watches for changes in certain variables
+  // watch: {
+  //   showForm(newValue) {
+  //     localStorage.showForm = newValue;
+  //   },
+  //   tasks(newTask) {
+  //     localStorage.tasks = JSON.stringify(newTask);
+  //   }
+  // },
+  // mounts certain values to variables before displaying
+  // mounted() {
+  //   if (localStorage.showForm != null) {
+  //     this.showForm = JSON.parse(localStorage.showForm);
+  //   }
+  //   if (localStorage.tasks) {
+  //     this.tasks = JSON.parse(localStorage.tasks)
+  //   }
+  // },
 };
 </script>

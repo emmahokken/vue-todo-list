@@ -29,12 +29,13 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit: function () {
       if (!this.task) {
         alert("Please add a task");
-      }
-      else if (!this.date) {
-        alert("Please add a date")
+        return false;
+      } else if (!this.date) {
+        alert("Please add a date");
+        return false;
       }
       const newTask = {
         id: Math.floor(Math.random() * 10000),
@@ -42,15 +43,19 @@ export default {
         day: this.date,
         reminder: this.reminder
       }
+      this.$store.dispatch('addTask', newTask)
+      this.$store.dispatch('toggleAddTaskForm')
+      // this.$store.state.tasks = [...this.$store.state.tasks, newTask];
+      // this.$store.state.showForm = false;
 
       this.task = null;
       this.date = null;
       this.reminder = false;
 
-      this.$emit('add-task', newTask)
+      // this.$emit('add-task', newTask)
       return true
-      }
     }
+  }
   }
 </script>
 
