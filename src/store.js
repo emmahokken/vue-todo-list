@@ -6,11 +6,18 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         tasks: [],
+        completedTasks: [],
         showForm: false
     },
     getters: {
         getTasks: state =>  {
-            return state.tasks
+            console.log(state.tasks.filter((task) => !task.completed))
+            return state.tasks.filter((task) => !task.completed)
+        },
+        getCompletedTasks: state => {
+            // return state.completedTasks
+            return state.tasks.filter((task) => task.completed)
+
         },
         getShowForm: state => {
             return state.showForm
@@ -18,17 +25,23 @@ export const store = new Vuex.Store({
     },
     // synchonious
     mutations: {
-        DELETE_TASK(state, id) {
-            state.tasks = state.tasks.filter((task) => task.id !== id);
-        },
         ADD_TASK(state, newTask) {
             state.tasks.push(newTask)
+        },
+        DELETE_TASK(state, id) {
+            state.tasks = state.tasks.filter((task) => task.id !== id);
         },
         TOGGLE_ADD_TASK_FORM(state) {
             state.showForm = !state.showForm;
         },
-        TOGGLE_DONE_TASK(state, id) {
+        TOGGLE_REMINDER(state, id) {
             state.tasks = state.tasks.map((task) => task.id == id ? { ...task, reminder: !task.reminder } : task )
+        },
+        COMPLETE_TASK(state, task) {
+            task.completed = true;
+            // state.completedTasks.push(task);
+            // state.tasks = state.tasks.filter((atask) => atask.id !== task.id);
+
         }
     },
     // asynchronichronous
@@ -42,8 +55,11 @@ export const store = new Vuex.Store({
         toggleAddTaskForm({commit}) {
             commit('TOGGLE_ADD_TASK_FORM')
         },
-        toggleDoneTask({commit}, id) {
-            commit('TOGGLE_DONE_TASK', id)
+        toggleReminder({commit}, id) {
+            commit('TOGGLE_REMINDER', id)
         },
+        completeTask({commit}, task) {
+            commit('COMPLETE_TASK', task)
+        }
     }
 })

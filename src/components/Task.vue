@@ -1,6 +1,7 @@
 <template>
-  <div :class="[task.reminder ? 'reminder' : '', 'task']" @dblclick="toggleDone(task.id)" >
+  <div :class="[task.reminder ? 'reminder' : '', 'task']" @dblclick="toggleReminder(task.id)" >
     <h3>{{ task.text }}
+      <i v-show="!task.completed" class="fas fa-check" @click="completeTask(task)" ></i>
       <i class="fas fa-times" @click="onDelete(task.id)" ></i>
     </h3>
     <p>{{ task.day }}</p>
@@ -15,10 +16,14 @@ export default {
   },
   methods: {
     onDelete(id) {
+      console.log('delete clicked')
       this.$store.dispatch('deleteTask', id)
     },
-    toggleDone(id) {
-      this.$store.dispatch('toggleDoneTask', id);
+    toggleReminder(id) {
+      this.$store.dispatch('toggleReminder', id);
+    },
+    completeTask(task) {
+      this.$store.dispatch('completeTask', task);
     }
   }
 }
@@ -44,6 +49,11 @@ export default {
 
   .fa-times {
     color: red;
+    cursor: pointer;
+  }
+
+  .fa-check {
+    color: limegreen;
     cursor: pointer;
   }
 

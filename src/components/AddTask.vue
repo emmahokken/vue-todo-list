@@ -25,7 +25,7 @@ export default {
     return {
       task: null,
       date: null,
-      reminder: false
+      reminder: false,
     }
   },
   methods: {
@@ -41,7 +41,8 @@ export default {
         id: Math.floor(Math.random() * 10000),
         text: this.task,
         day: this.date,
-        reminder: this.reminder
+        reminder: this.reminder,
+        completed: false
       }
       this.$store.dispatch('addTask', newTask)
       this.$store.dispatch('toggleAddTaskForm')
@@ -52,7 +53,6 @@ export default {
       this.date = null;
       this.reminder = false;
 
-      // this.$emit('add-task', newTask)
       return true
     }
   }
