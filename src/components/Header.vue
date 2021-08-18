@@ -1,6 +1,6 @@
 <template>
 <header>
-  <h1> To Do List</h1>
+  <h1>To Do List</h1>
   <Button @hide-form="hideAddTaskForm" text="Press me!"/>
 </header>
 </template>
